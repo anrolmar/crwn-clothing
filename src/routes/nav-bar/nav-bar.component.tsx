@@ -2,7 +2,7 @@ import { Fragment, FunctionComponent } from 'react';
 import { Outlet, Link } from 'react-router';
 
 import CrwnLogo from '../../assets/crown.svg?react';
-import { useCurrentUser } from '../../contexts/user.context';
+import { useCurrentUser } from '../../hooks/useUser.hook';
 import { signOutUser } from '../../utils/firebase/firebase.utils';
 
 import './nav-bar.styles.scss';
