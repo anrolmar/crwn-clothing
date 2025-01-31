@@ -1,3 +1,4 @@
+import { FirestoreError } from 'firebase/firestore';
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
 
 import {
@@ -9,7 +10,6 @@ import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
 import './sign-in-form.styles.scss';
-import { FirestoreError } from 'firebase/firestore';
 
 const defaultFormFields = {
   email: '',
@@ -36,7 +36,7 @@ const SignInForm: FunctionComponent = () => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(email, password);
+      await signInAuthUserWithEmailAndPassword(email, password);
       resetFormFields();
     } catch (error) {
       switch ((error as FirestoreError).code) {
@@ -56,8 +56,7 @@ const SignInForm: FunctionComponent = () => {
   };
 
   const handleSignInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
 
   return (
