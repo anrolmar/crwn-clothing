@@ -1,8 +1,10 @@
 import { FunctionComponent } from 'react';
 
-import './product-card.styles.scss';
+import { useCart } from '../../hooks/useCart.hook';
 import { Product } from '../../types';
 import Button from '../button/button.component';
+
+import './product-card.styles.scss';
 
 interface ProductCardProps {
   product: Product;
@@ -10,6 +12,9 @@ interface ProductCardProps {
 
 const ProductCard: FunctionComponent<ProductCardProps> = ({ product }) => {
   const { name, imageUrl, price } = product;
+  const { addItemToCart } = useCart();
+
+  const handleAddProductToCart = () => addItemToCart(product);
 
   return (
     <div className="product-card-container">
@@ -18,7 +23,9 @@ const ProductCard: FunctionComponent<ProductCardProps> = ({ product }) => {
         <span className="name">{name}</span>
         <span className="price">{price}</span>
       </div>
-      <Button buttonType="inverted">Add to card</Button>
+      <Button buttonType="inverted" onClick={handleAddProductToCart}>
+        Add to cart
+      </Button>
     </div>
   );
 };
