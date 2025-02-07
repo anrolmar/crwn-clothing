@@ -5,7 +5,7 @@ import { useProducts } from '../../hooks/useProducts.hook';
 
 import './shop.styles.scss';
 
-const Shop: FunctionComponent = () => {
+const ShopPage: FunctionComponent = () => {
   const { products } = useProducts();
 
   return (
@@ -17,4 +17,4 @@ const Shop: FunctionComponent = () => {
   );
 };
 
-export default Shop;
+export default ShopPage;

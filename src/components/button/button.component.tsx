@@ -11,7 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: FunctionComponent<ButtonProps> = ({ children, buttonType, ...buttonOptions }) => {
   return (
-    <button className={`button-container ${buttonType}`} {...buttonOptions}>
+    <button className={`button-container ${buttonType ?? ''}`} {...buttonOptions}>
       {children}
     </button>
   );
