@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Outlet, Link } from 'react-router';
 
 import CrwnLogo from '../../assets/crown.svg?react';
@@ -6,7 +6,7 @@ import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component
 import CartIcon from '../../components/cart-icon/cart-icon.component';
 import { useCart } from '../../hooks/useCart.hook';
 import { useCurrentUser } from '../../hooks/useUser.hook';
-import { signOutUser } from '../../utils/firebase/firebase.utils';
+import { signOutUser } from '../../utils/firebase/auth-firebase.utils';
 
 import './nav-bar.styles.scss';
 
@@ -19,7 +19,7 @@ const NavBar: FunctionComponent = () => {
   };
 
   return (
-    <Fragment>
+    <>
       <div className="nav-bar">
         <Link className="logo-container" to="/">
           <CrwnLogo className="logo" />
@@ -42,7 +42,7 @@ const NavBar: FunctionComponent = () => {
         {isCartOpen && <CartDropdown />}
       </div>
       <Outlet />
-    </Fragment>
+    </>
   );
 };
 

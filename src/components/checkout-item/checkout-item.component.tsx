@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { useCart } from '../../hooks/useCart.hook';
-import { useProducts } from '../../hooks/useProducts.hook';
+import { useCategories } from '../../hooks/useCategories.hook';
 import { CartItem } from '../../types';
 
 import './checkout-item.styles.scss';
@@ -14,7 +14,7 @@ const CheckoutItem: FunctionComponent<CheckoutItemProps> = ({ cartItem }) => {
   const { imageUrl, name, price, quantity } = cartItem;
 
   const { addItemToCart, clearItemFromCart, removeItemFromCart } = useCart();
-  const { products } = useProducts();
+  const { categories } = useCategories();
 
   // Event handlers
   const handleAddProductToCart = () => {

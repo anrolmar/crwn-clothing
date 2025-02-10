@@ -6,7 +6,7 @@ import {
   createUserDocumentFromAuth,
   onAuthStateChangedListener,
   signOutUser,
-} from '../../utils/firebase/firebase.utils';
+} from '../../utils/firebase/auth-firebase.utils';
 
 type UserContextProviderProps = {
   children: React.ReactNode;

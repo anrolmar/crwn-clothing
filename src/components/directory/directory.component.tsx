@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { Category } from '../../types';
-import CategoryItem from '../category-item/category-item.component';
+import DirectoryItem from '../directory-item/directory-item.component';
 
 import './directory.styles.scss';
 
@@ -10,26 +10,31 @@ const categories: Category[] = [
     id: 1,
     title: 'hats',
     imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
+    products: [],
   },
   {
     id: 2,
     title: 'jackets',
     imageUrl: 'https://i.ibb.co/px2tCc3/jackets.png',
+    products: [],
   },
   {
     id: 3,
     title: 'sneakers',
     imageUrl: 'https://i.ibb.co/0jqHpnp/sneakers.png',
+    products: [],
   },
   {
     id: 4,
     title: 'womens',
     imageUrl: 'https://i.ibb.co/GCCdy8t/womens.png',
+    products: [],
   },
   {
     id: 5,
     title: 'mens',
     imageUrl: 'https://i.ibb.co/R70vBrQ/men.png',
+    products: [],
   },
 ];
 
@@ -37,7 +42,7 @@ const Directory: FunctionComponent = () => {
   return (
     <div className="directory-container">
       {categories.map((category) => (
-        <CategoryItem category={category} key={category.id} />
+        <DirectoryItem category={category} key={category.id} />
       ))}
     </div>
   );

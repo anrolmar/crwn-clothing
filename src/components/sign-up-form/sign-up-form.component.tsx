@@ -1,7 +1,10 @@
 import { FirestoreError } from 'firebase/firestore';
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
 
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+} from '../../utils/firebase/auth-firebase.utils';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
