@@ -16,7 +16,7 @@ const DirectoryItem: FunctionComponent<DirectoryItemProps> = ({ category }) => {
 
   return (
     <DirectoryItemContainer onClick={onNavigateHandler}>
-      <BackgroundImage imageUrl={imageUrl}></BackgroundImage>
+      <BackgroundImage $imageUrl={imageUrl}></BackgroundImage>
       <DirectoryItemBodyContainer>
         <h2>{title}</h2>
         <p>Shop Now</p>

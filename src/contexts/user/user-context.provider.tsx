@@ -1,15 +1,22 @@
 import { User } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 
-import { UserContext, UserContextType } from './user.context';
+import { UserContext } from './user.context';
+import { USER_ACTION_TYPES, userReducer, UserState } from '../../reducers/user.reducer';
 import { createUserDocumentFromAuth, onAuthStateChangedListener } from '../../utils/firebase/auth-firebase.utils';
 
 type UserContextProviderProps = {
   children: React.ReactNode;
 };
 
+const INITIAL_STATE: UserState = {
+  currentUser: null,
+};
+
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
-  const [currentUser, setCurrentUser] = useState<UserContextType['currentUser']>(null);
+  const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE);
+  const setCurrentUser = (user: User | null) => dispatch({ type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user });
+
   const value = { currentUser, setCurrentUser };
 
   useEffect(() => {

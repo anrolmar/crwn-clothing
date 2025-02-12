@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction } from 'react';
+import { createContext } from 'react';
 
 import { CartItem, Product } from '../../types';
 
@@ -10,7 +10,7 @@ export type CartContextType = {
   addItemToCart: (product: Product) => void;
   clearItemFromCart: (cartItem: CartItem) => void;
   removeItemFromCart: (cartItem: CartItem) => void;
-  setIsCartOpen: Dispatch<SetStateAction<CartContextType['isCartOpen']>>;
+  setIsCartOpen: () => void;
 };
 
 export const CartContext = createContext<CartContextType>({} as CartContextType);
