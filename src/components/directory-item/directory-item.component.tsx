@@ -2,10 +2,10 @@ import { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router';
 
 import { DirectoryItemContainer, BackgroundImage, DirectoryItemBodyContainer } from './directory-item.styles';
-import { Category } from '../../types';
+import { CategoryWithRoute } from '../../types';
 
 interface DirectoryItemProps {
-  category: Category;
+  category: CategoryWithRoute;
 }
 
 const DirectoryItem: FunctionComponent<DirectoryItemProps> = ({ category }) => {

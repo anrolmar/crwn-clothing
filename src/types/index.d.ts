@@ -7,6 +7,9 @@ export interface Category {
   title: string;
   imageUrl?: string;
   products: Product[];
+}
+
+export interface CategoryWithRoute extends Category {
   route: string;
 }
 

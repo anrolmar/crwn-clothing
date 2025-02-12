@@ -20,11 +20,11 @@ interface CheckoutItemProps {
 const CheckoutItem: FunctionComponent<CheckoutItemProps> = ({ cartItem }) => {
   const { imageUrl, name, price, quantity } = cartItem;
 
-  const { addItemToCart, clearItemFromCart, removeItemFromCart } = useCart();
+  const { cartItems, addItemToCart, clearItemFromCart, removeItemFromCart } = useCart();
 
   // Event handlers
   const handleAddProductToCart = () => {
-    const product = products.find((product) => product.id === cartItem.id);
+    const product = cartItems.find((product) => product.id === cartItem.id);
     if (product) {
       addItemToCart(product);
     }

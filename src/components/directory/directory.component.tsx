@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
 
 import { DirectoryContainer } from './directory.styles';
-import { Category } from '../../types';
+import { CategoryWithRoute } from '../../types';
 import DirectoryItem from '../directory-item/directory-item.component';
 
-const categories: Category[] = [
+const categories: CategoryWithRoute[] = [
   {
     id: 1,
     title: 'hats',

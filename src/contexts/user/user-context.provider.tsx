@@ -2,11 +2,7 @@ import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
 import { UserContext, UserContextType } from './user.context';
-import {
-  createUserDocumentFromAuth,
-  onAuthStateChangedListener,
-  signOutUser,
-} from '../../utils/firebase/auth-firebase.utils';
+import { createUserDocumentFromAuth, onAuthStateChangedListener } from '../../utils/firebase/auth-firebase.utils';
 
 type UserContextProviderProps = {
   children: React.ReactNode;
