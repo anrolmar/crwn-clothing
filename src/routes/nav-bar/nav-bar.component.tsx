@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
-import { Outlet, Link } from 'react-router';
+import { Outlet } from 'react-router';
 
+import { LogoContainer, NavBarContainer, NavLink, NavLinksContainer } from './nav-bar.styles';
 import CrwnLogo from '../../assets/crown.svg?react';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 import CartIcon from '../../components/cart-icon/cart-icon.component';
@@ -8,7 +9,7 @@ import { useCart } from '../../hooks/useCart.hook';
 import { useCurrentUser } from '../../hooks/useUser.hook';
 import { signOutUser } from '../../utils/firebase/auth-firebase.utils';
 
-import './nav-bar.styles.scss';
+// import './nav-bar.styles.scss';
 
 const NavBar: FunctionComponent = () => {
   const { currentUser } = useCurrentUser();
@@ -20,27 +21,23 @@ const NavBar: FunctionComponent = () => {
 
   return (
     <>
-      <div className="nav-bar">
-        <Link className="logo-container" to="/">
+      <NavBarContainer>
+        <LogoContainer to="/">
           <CrwnLogo className="logo" />
-        </Link>
-        <div className="nav-links-container">
-          <Link className="nav-link" to="/shop">
-            SHOP
-          </Link>
+        </LogoContainer>
+        <NavLinksContainer>
+          <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutHandler}>
+            <NavLink as="span" to="" onClick={signOutHandler}>
               SIGN OUT
-            </span>
+            </NavLink>
           ) : (
-            <Link className="nav-link" to="/auth">
-              SIGN IN
-            </Link>
+            <NavLink to="/auth">SIGN IN</NavLink>
           )}
           <CartIcon />
-        </div>
+        </NavLinksContainer>
         {isCartOpen && <CartDropdown />}
-      </div>
+      </NavBarContainer>
       <Outlet />
     </>
   );

@@ -14,8 +14,7 @@ type UserContextProviderProps = {
 
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const [currentUser, setCurrentUser] = useState<UserContextType['currentUser']>(null);
-
-  void signOutUser();
+  const value = { currentUser, setCurrentUser };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user: User | null) => {
@@ -28,5 +27,5 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     return unsubscribe;
   }, []);
 
-  return <UserContext.Provider value={{ currentUser, setCurrentUser }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

@@ -65,7 +65,7 @@ const SignInForm: FunctionComponent = () => {
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>
           <Button type="button" buttonType="google-sign-in" onClick={handleSignInWithGoogle}>
-            Google Sign In
+            Sign In With Google
           </Button>
         </div>
       </form>

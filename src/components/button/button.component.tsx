@@ -1,20 +1,33 @@
 import { ButtonHTMLAttributes, FunctionComponent, ReactNode } from 'react';
 
-import './button.styles.scss';
+import { BaseButton, GoogleSignInButton, InvertedButton } from './button.styles';
 
-type ButtonType = 'google-sign-in' | 'inverted';
+type ButtonType = 'base' | 'google-sign-in' | 'inverted';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonType?: ButtonType;
   children?: ReactNode;
 }
 
+const getButton = (buttonType: ButtonType = 'base') => {
+  {
+    switch (buttonType) {
+      case 'base':
+        return BaseButton;
+
+      case 'google-sign-in':
+        return GoogleSignInButton;
+
+      case 'inverted':
+        return InvertedButton;
+    }
+  }
+};
+
 const Button: FunctionComponent<ButtonProps> = ({ children, buttonType, ...buttonOptions }) => {
-  return (
-    <button className={`button-container ${buttonType ?? ''}`} {...buttonOptions}>
-      {children}
-    </button>
-  );
+  const CustomButton = getButton(buttonType);
+
+  return <CustomButton {...buttonOptions}>{children}</CustomButton>;
 };
 
 export default Button;

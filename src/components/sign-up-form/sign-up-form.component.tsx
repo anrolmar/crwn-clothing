@@ -1,14 +1,13 @@
 import { FirestoreError } from 'firebase/firestore';
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
 
+import { SignUpContainer, SignUpTitle } from './sign-up-form.styles';
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from '../../utils/firebase/auth-firebase.utils';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
-
-import './sign-up-form.styles.scss';
 
 const defaultFormFields = {
   displayName: '',
@@ -57,8 +56,8 @@ const SignUpForm: FunctionComponent = () => {
   };
 
   return (
-    <div className="sign-up-container">
-      <h2>I do not have an account</h2>
+    <SignUpContainer>
+      <SignUpTitle>I do not have an account</SignUpTitle>
       <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
@@ -82,7 +81,7 @@ const SignUpForm: FunctionComponent = () => {
 
         <Button type="submit">Sign Up</Button>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
 

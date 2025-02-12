@@ -1,10 +1,15 @@
 import { FunctionComponent } from 'react';
 
+import {
+  ProductCardButton,
+  ProductCardContainer,
+  ProductCardFooter,
+  ProductCardImage,
+  ProductCardName,
+  ProductCardPrice,
+} from './product-card.styles';
 import { useCart } from '../../hooks/useCart.hook';
 import { Product } from '../../types';
-import Button from '../button/button.component';
-
-import './product-card.styles.scss';
 
 interface ProductCardProps {
   product: Product;
@@ -17,16 +22,14 @@ const ProductCard: FunctionComponent<ProductCardProps> = ({ product }) => {
   const handleAddProductToCart = () => addItemToCart(product);
 
   return (
-    <div className="product-card-container">
-      <img src={imageUrl} alt={`${name}`} />
-      <div className="footer">
-        <span className="name">{name}</span>
-        <span className="price">{price}</span>
-      </div>
-      <Button buttonType="inverted" onClick={handleAddProductToCart}>
-        Add to cart
-      </Button>
-    </div>
+    <ProductCardContainer>
+      <ProductCardImage src={imageUrl} alt={`${name}`} />
+      <ProductCardFooter>
+        <ProductCardName>{name}</ProductCardName>
+        <ProductCardPrice>{price}</ProductCardPrice>
+      </ProductCardFooter>
+      <ProductCardButton onClick={handleAddProductToCart}>Add to cart</ProductCardButton>
+    </ProductCardContainer>
   );
 };
 

@@ -1,11 +1,10 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
+import { CategoryTitle, CategoryContainer } from './category.styles';
 import ProductCard from '../../components/product-card/product-card.component';
 import { useCategories } from '../../hooks/useCategories.hook';
 import { Product } from '../../types';
-
-import './category.styles.scss';
 
 const CategoryPage: FunctionComponent = () => {
   const { category } = useParams();
@@ -20,10 +19,10 @@ const CategoryPage: FunctionComponent = () => {
 
   return (
     <>
-      <h2 className="category-title">{category?.toUpperCase()}</h2>
-      <div className="category-container">
+      <CategoryTitle>{category?.toUpperCase()}</CategoryTitle>
+      <CategoryContainer>
         {products && products.map((product) => <ProductCard key={product.id} product={product} />)}
-      </div>
+      </CategoryContainer>
     </>
   );
 };

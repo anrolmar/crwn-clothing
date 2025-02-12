@@ -7,6 +7,7 @@ export interface Category {
   title: string;
   imageUrl?: string;
   products: Product[];
+  route: string;
 }
 
 export interface Product {

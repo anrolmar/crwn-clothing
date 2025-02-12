@@ -1,11 +1,10 @@
 import { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router';
 
+import { CartDropdownContainer, CartItems, EmptyMessage } from './cart-dropdown.styles';
 import { useCart } from '../../hooks/useCart.hook';
 import Button from '../button/button.component';
 import CartItem from '../cart-item/cart-item.component';
-
-import './cart-dropdown.styles.scss';
 
 const CartDropdown: FunctionComponent = () => {
   const { cartItems } = useCart();
@@ -16,14 +15,16 @@ const CartDropdown: FunctionComponent = () => {
   };
 
   return (
-    <div className="cart-dropdown-container">
-      <div className="cart-items">
-        {cartItems.map((item) => (
-          <CartItem key={item.id} cartItem={item} />
-        ))}
-      </div>
+    <CartDropdownContainer>
+      <CartItems>
+        {cartItems.length ? (
+          cartItems.map((item) => <CartItem key={item.id} cartItem={item} />)
+        ) : (
+          <EmptyMessage>Your cart is empty</EmptyMessage>
+        )}
+      </CartItems>
       <Button onClick={handleGoToCheckout}>Go to checkout</Button>
-    </div>
+    </CartDropdownContainer>
   );
 };
 
