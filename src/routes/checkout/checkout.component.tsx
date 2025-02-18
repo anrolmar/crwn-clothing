@@ -1,12 +1,14 @@
 import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
 
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
-import { useCart } from '../../hooks/useCart.hook';
+import { selectCartItems, selectCartTotal } from '../../store/cart/cart.selector';
 
 import './checkout.styles.scss';
 
 const CheckoutPage: FunctionComponent = () => {
-  const { cartItems, cartTotal } = useCart();
+  const cartTotal = useSelector(selectCartTotal);
+  const cartItems = useSelector(selectCartItems);
 
   return (
     <div className="checkout-container">

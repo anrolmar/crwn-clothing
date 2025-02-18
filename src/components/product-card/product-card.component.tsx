@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   ProductCardButton,
@@ -8,7 +9,8 @@ import {
   ProductCardName,
   ProductCardPrice,
 } from './product-card.styles';
-import { useCart } from '../../hooks/useCart.hook';
+import { addItemToCart } from '../../store/cart/cart.action';
+import { selectCartItems } from '../../store/cart/cart.selector';
 import { Product } from '../../types';
 
 interface ProductCardProps {
@@ -17,9 +19,13 @@ interface ProductCardProps {
 
 const ProductCard: FunctionComponent<ProductCardProps> = ({ product }) => {
   const { name, imageUrl, price } = product;
-  const { addItemToCart } = useCart();
 
-  const handleAddProductToCart = () => addItemToCart(product);
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+
+  const handleAddProductToCart = () => {
+    dispatch(addItemToCart(cartItems, product));
+  };
 
   return (
     <ProductCardContainer>

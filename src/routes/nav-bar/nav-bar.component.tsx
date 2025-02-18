@@ -1,19 +1,18 @@
 import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
 
 import { LogoContainer, NavBarContainer, NavLink, NavLinksContainer } from './nav-bar.styles';
 import CrwnLogo from '../../assets/crown.svg?react';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 import CartIcon from '../../components/cart-icon/cart-icon.component';
-import { useCart } from '../../hooks/useCart.hook';
-import { useCurrentUser } from '../../hooks/useUser.hook';
+import { selectIsCartOpen } from '../../store/cart/cart.selector';
+import { selectCurrentUser } from '../../store/user/user.selector';
 import { signOutUser } from '../../utils/firebase/auth-firebase.utils';
 
-// import './nav-bar.styles.scss';
-
 const NavBar: FunctionComponent = () => {
-  const { currentUser } = useCurrentUser();
-  const { isCartOpen } = useCart();
+  const currentUser = useSelector(selectCurrentUser);
+  const isCartOpen = useSelector(selectIsCartOpen);
 
   const signOutHandler = async () => {
     await signOutUser();

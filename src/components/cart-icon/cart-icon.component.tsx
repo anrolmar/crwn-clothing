@@ -1,12 +1,15 @@
 import { FunctionComponent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { CartIconContainer, ItemCount, ShoppingIcon } from './cart-icon.styles';
-import { useCart } from '../../hooks/useCart.hook';
+import { toggleCartHidden } from '../../store/cart/cart.action';
+import { selectCartCount } from '../../store/cart/cart.selector';
 
 const CartIcon: FunctionComponent = () => {
-  const { isCartOpen, setIsCartOpen, cartCount } = useCart();
+  const dispatch = useDispatch();
 
-  const toggleIsCartOpen = () => setIsCartOpen(!isCartOpen);
+  const cartCount = useSelector(selectCartCount);
+  const toggleIsCartOpen = () => dispatch(toggleCartHidden());
 
   return (
     <CartIconContainer onClick={toggleIsCartOpen}>

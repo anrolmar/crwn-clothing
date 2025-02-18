@@ -21,12 +21,5 @@ export const getCategoriesAndProducts = async () => {
   const q = query(categoriesRef);
   const categoriesSnapshot = await getDocs(q);
 
-  const categoriesData = categoriesSnapshot.docs.reduce((acc: Record<string, Product[]>, docSnapshot) => {
-    const { title, products } = docSnapshot.data() as Category;
-
-    acc[title.toLowerCase()] = products;
-    return acc;
-  }, {});
-
-  return categoriesData;
+  return categoriesSnapshot.docs.map((docSnapshot) => docSnapshot.data() as Category);
 };

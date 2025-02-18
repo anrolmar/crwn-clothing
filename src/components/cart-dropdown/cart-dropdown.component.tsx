@@ -1,13 +1,14 @@
 import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { CartDropdownContainer, CartItems, EmptyMessage } from './cart-dropdown.styles';
-import { useCart } from '../../hooks/useCart.hook';
+import { selectCartItems } from '../../store/cart/cart.selector';
 import Button from '../button/button.component';
 import CartItem from '../cart-item/cart-item.component';
 
 const CartDropdown: FunctionComponent = () => {
-  const { cartItems } = useCart();
+  const cartItems = useSelector(selectCartItems);
   const navigate = useNavigate();
 
   const handleGoToCheckout = () => {

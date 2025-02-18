@@ -1,10 +1,11 @@
 import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
 
 import CategoryPreview from '../../components/category-preview/category-preview.component';
-import { useCategories } from '../../hooks/useCategories.hook';
+import { selectCategoriesMap } from '../../store/categories/category.selector';
 
 const CategoriesPreviewPage: FunctionComponent = () => {
-  const { categories } = useCategories();
+  const categories = useSelector(selectCategoriesMap);
 
   return (
     <>
