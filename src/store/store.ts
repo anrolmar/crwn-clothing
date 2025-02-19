@@ -1,11 +1,27 @@
-import { compose, createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from '@redux-devtools/extension';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { thunk } from 'redux-thunk';
 
-import { rootReducer } from './root.reducer';
+import { cartReducer } from './cart/cart.reducer';
 
-const middleWares = [logger];
-const composeEnhancers = compose(applyMiddleware(...middleWares));
+const persistCartConfig = {
+  key: 'cart',
+  storage,
+};
+const persistedCart = persistReducer(persistCartConfig, cartReducer);
 
-export const store = createStore(rootReducer, undefined, composeEnhancers);
+const persistedReducer = combineReducers({
+  cart: persistedCart,
+});
 
-export type RootState = ReturnType<typeof rootReducer>;
+const middleWares = process.env.NODE_ENV !== 'production' ? [logger] : [];
+middleWares.push(thunk);
+
+const composeEnhancers = composeWithDevTools(applyMiddleware(...middleWares));
+
+export const store = createStore(persistedReducer, undefined, composeEnhancers);
+
+export const persistor = persistStore(store);

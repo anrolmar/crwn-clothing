@@ -1,7 +1,7 @@
 import { doc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 
 import { db } from './firebase.utils';
-import { Category, Product } from '../../types';
+import { Category } from '../../types';
 
 export const addCollectionAndDocuments = async (collectionKey: string, objectsToAdd: Category[]) => {
   const collectionRef = collection(db, collectionKey);
