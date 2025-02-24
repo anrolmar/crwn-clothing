@@ -1,6 +1,5 @@
 import {
   getAuth,
-  signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
   User,
@@ -9,11 +8,21 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { doc, getDoc, setDoc, FirestoreError } from 'firebase/firestore';
+import { doc, getDoc, setDoc, QueryDocumentSnapshot } from 'firebase/firestore';
 
 import { db } from './firebase.utils';
 
 export const auth = getAuth();
+
+export type AdditionalInformation = {
+  displayName?: string;
+};
+
+export type UserData = {
+  createdAt: Date;
+  displayName: string;
+  email: string;
+};
 
 // Sign in with Google
 const googleProvider = new GoogleAuthProvider();
@@ -22,9 +31,11 @@ googleProvider.setCustomParameters({
 });
 
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
-export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
-export const createUserDocumentFromAuth = async (userAuth: User, additionalInformation = {}) => {
+export const createUserDocumentFromAuth = async (
+  userAuth: User,
+  additionalInformation = {} as AdditionalInformation,
+): Promise<void | QueryDocumentSnapshot<UserData>> => {
   if (!userAuth) {
     return;
   }
@@ -37,11 +48,11 @@ export const createUserDocumentFromAuth = async (userAuth: User, additionalInfor
     try {
       await setDoc(userDocRef, { displayName, email, createdAt, ...additionalInformation });
     } catch (error) {
-      console.log('error creating the user', (error as FirestoreError).message);
+      console.log('error creating the user', error);
     }
   }
 
-  return userDocRef;
+  return userSnapshot as QueryDocumentSnapshot<UserData>;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email: string, password: string) => {
@@ -62,5 +73,15 @@ export const signInAuthUserWithEmailAndPassword = async (email: string, password
 
 export const signOutUser = async () => await signOut(auth);
 
-export const onAuthStateChangedListener = (changeCallback: (user: User | null) => void) =>
-  onAuthStateChanged(auth, changeCallback);
+export const getCurrentUser = (): Promise<User | null> => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject,
+    );
+  });
+};

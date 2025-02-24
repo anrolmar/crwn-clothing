@@ -1,27 +1,20 @@
-import { Action } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-
 import { CATEGORIES_ACTION_TYPES } from './category.types';
 import { Category } from '../../types';
-import { getCategoriesAndProducts } from '../../utils/firebase/products-firebase.utils';
-import { createAction } from '../../utils/reducer/reducer.utils';
+import { createAction, Action, ActionWithPayload, withMatcher } from '../../utils/reducer/reducer.utils';
 
-export const fetchCategoriesFailed = (error: string) =>
-  createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, error);
+type FetchCategoriesFailed = ActionWithPayload<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, string>;
+type FetchCategoriesStart = Action<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START>;
+type FetchCategoriesSuccess = ActionWithPayload<CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS, Category[]>;
 
-export const fetchCategoriesStart = () => createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START);
+export const fetchCategoriesFailed = withMatcher(
+  (error: string): FetchCategoriesFailed => createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, error),
+);
 
-export const fetchCategoriesSuccess = (categories: Category[]) =>
-  createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS, categories);
+export const fetchCategoriesStart = withMatcher(
+  (): FetchCategoriesStart => createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START),
+);
 
-export const fetchCategoriesAsync = () => {
-  return async (dispatch: ThunkDispatch<unknown, unknown, Action>): Promise<void> => {
-    dispatch(fetchCategoriesStart());
-    try {
-      const categories = await getCategoriesAndProducts();
-      dispatch(fetchCategoriesSuccess(categories));
-    } catch (error) {
-      dispatch(fetchCategoriesFailed(error as string));
-    }
-  };
-};
+export const fetchCategoriesSuccess = withMatcher(
+  (categories: Category[]): FetchCategoriesSuccess =>
+    createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS, categories),
+);

@@ -1,9 +1,9 @@
 import { Category, Product } from '../../types';
 
 export interface CategoriesState {
-  categories: Category[];
-  error?: string;
-  isLoading: boolean;
+  readonly categories: Category[];
+  readonly error: string | null;
+  readonly isLoading: boolean;
 }
 
 export enum CATEGORIES_ACTION_TYPES {
@@ -12,9 +12,4 @@ export enum CATEGORIES_ACTION_TYPES {
   FETCH_CATEGORIES_SUCCESS = 'categories/FETCH_CATEGORIES_SUCCESS',
 }
 
-export type CategoriesMap = Record<string, Product[]>;
-
-export type CategoriesAction = {
-  type: CATEGORIES_ACTION_TYPES.SET_CATEGORIES;
-  payload: Category[];
-};
+export type CategoryMap = Record<string, Product[]>;

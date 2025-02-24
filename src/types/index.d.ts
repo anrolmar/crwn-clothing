@@ -3,9 +3,8 @@ export interface CartItem extends Product {
 }
 
 export interface Category {
-  id?: number;
   title: string;
-  imageUrl?: string;
+  imageUrl: string;
   products: Product[];
 }
 

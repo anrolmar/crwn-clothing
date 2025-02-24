@@ -1,6 +1,4 @@
-import { Category } from './types';
-
-const SHOP_DATA: Category[] = [
+const SHOP_DATA = [
   {
     title: 'Hats',
     products: [
