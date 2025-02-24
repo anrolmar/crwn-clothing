@@ -1,6 +1,6 @@
 import { UnknownAction } from 'redux';
 
-import { signInFailed, signInSuccess } from './user.action';
+import { signInFailed, signInSuccess, signOutFailed, signOutSuccess, signUpFailed } from './user.action';
 import { UserState } from './user.types';
 
 const INITIAL_STATE: UserState = {
@@ -10,19 +10,24 @@ const INITIAL_STATE: UserState = {
 };
 
 export const userReducer = (state: UserState = INITIAL_STATE, action = {} as UnknownAction): UserState => {
-  if (signInFailed.match(action)) {
+  if (signInSuccess.match(action)) {
     return {
       ...state,
-      isLoading: false,
+      currentUser: action.payload,
+    };
+  }
+
+  if (signInFailed.match(action) || signUpFailed.match(action) || signOutFailed.match(action)) {
+    return {
+      ...state,
       error: action.payload,
     };
   }
 
-  if (signInSuccess.match(action)) {
+  if (signOutSuccess.match(action)) {
     return {
       ...state,
-      isLoading: false,
-      currentUser: action.payload,
+      currentUser: null,
     };
   }
 

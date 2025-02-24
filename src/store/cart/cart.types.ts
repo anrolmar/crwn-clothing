@@ -1,8 +1,8 @@
 import { CartItem } from '../../types';
 
 export interface CartState {
-  cartItems: CartItem[];
-  isCartOpen: boolean;
+  readonly cartItems: CartItem[];
+  readonly isCartOpen: boolean;
 }
 
 export enum CART_ACTION_TYPES {
