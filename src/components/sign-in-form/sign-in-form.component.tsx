@@ -1,8 +1,7 @@
 import { FirestoreError } from 'firebase/firestore';
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { emailSignInStart, googleSignInStart } from '../../store/user/user.action';
+import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../utils/firebase/auth-firebase.utils';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
@@ -14,7 +13,6 @@ const defaultFormFields = {
 };
 
 const SignInForm: FunctionComponent = () => {
-  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
 
   const { email, password } = formFields;
@@ -31,11 +29,11 @@ const SignInForm: FunctionComponent = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const handleSignIn = (event: FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      dispatch(emailSignInStart(email, password));
+      await signInAuthUserWithEmailAndPassword(email, password);
       resetFormFields();
     } catch (error) {
       switch ((error as FirestoreError).code) {
@@ -54,9 +52,7 @@ const SignInForm: FunctionComponent = () => {
     }
   };
 
-  const handleSignInWithGoogle = () => {
-    dispatch(googleSignInStart());
-  };
+  const handleSignInWithGoogle = async () => await signInWithGooglePopup();
 
   return (
     <div className="sign-in-container">

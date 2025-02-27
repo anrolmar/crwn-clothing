@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  NextOrObserver,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, QueryDocumentSnapshot } from 'firebase/firestore';
 
@@ -19,7 +20,7 @@ export type AdditionalInformation = {
 };
 
 export type UserData = {
-  createdAt: Date;
+  createdAt: string;
   displayName: string;
   email: string;
 };
@@ -44,7 +45,7 @@ export const createUserDocumentFromAuth = async (
   const userSnapshot = await getDoc(userDocRef);
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
-    const createdAt = new Date();
+    const createdAt = new Date().toISOString();
     try {
       await setDoc(userDocRef, { displayName, email, createdAt, ...additionalInformation });
     } catch (error) {
@@ -73,15 +74,4 @@ export const signInAuthUserWithEmailAndPassword = async (email: string, password
 
 export const signOutUser = async () => await signOut(auth);
 
-export const getCurrentUser = (): Promise<User | null> => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (userAuth) => {
-        unsubscribe();
-        resolve(userAuth);
-      },
-      reject,
-    );
-  });
-};
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback);

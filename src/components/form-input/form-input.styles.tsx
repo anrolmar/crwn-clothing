@@ -10,7 +10,7 @@ const shrinkLabelStyles = css`
 `;
 
 type FormInputLabelProps = {
-  shrink?: boolean;
+  shrink?: string;
 };
 
 export const FormInputLabel = styled.label<FormInputLabelProps>`
@@ -23,7 +23,7 @@ export const FormInputLabel = styled.label<FormInputLabelProps>`
   top: 10px;
   transition: 300ms ease all;
 
-  ${({ shrink }) => (shrink ? shrinkLabelStyles : undefined)}
+  ${({ shrink }) => (shrink?.toLocaleLowerCase() === 'true' ? shrinkLabelStyles : undefined)}
 `;
 
 export const Input = styled.input`

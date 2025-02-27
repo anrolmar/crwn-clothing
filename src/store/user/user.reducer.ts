@@ -1,6 +1,6 @@
-import { UnknownAction } from 'redux';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from 'firebase/auth';
 
-import { signInFailed, signInSuccess, signOutFailed, signOutSuccess, signUpFailed } from './user.action';
 import { UserState } from './user.types';
 
 const INITIAL_STATE: UserState = {
@@ -9,27 +9,17 @@ const INITIAL_STATE: UserState = {
   isLoading: false,
 };
 
-export const userReducer = (state: UserState = INITIAL_STATE, action = {} as UnknownAction): UserState => {
-  if (signInSuccess.match(action)) {
-    return {
-      ...state,
-      currentUser: action.payload,
-    };
-  }
+const userSlice = createSlice({
+  name: 'user',
+  initialState: INITIAL_STATE,
+  reducers: {
+    setCurrentUser: (state, action: PayloadAction<User | null>) => {
+      state.currentUser = action.payload;
+    },
+  },
+});
 
-  if (signInFailed.match(action) || signUpFailed.match(action) || signOutFailed.match(action)) {
-    return {
-      ...state,
-      error: action.payload,
-    };
-  }
+// Action creators are generated for each case reducer function
+export const { setCurrentUser } = userSlice.actions;
 
-  if (signOutSuccess.match(action)) {
-    return {
-      ...state,
-      currentUser: null,
-    };
-  }
-
-  return state;
-};
+export const userReducer = userSlice.reducer;
