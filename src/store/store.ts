@@ -33,6 +33,4 @@ export const store = configureStore({
     }).concat(customMiddleWares),
 });
 
-// export const store = createStore(persistedReducer, undefined, composeEnhancers);
-
 export const persistor = persistStore(store);

@@ -5,8 +5,6 @@ import { UserState } from './user.types';
 
 const INITIAL_STATE: UserState = {
   currentUser: null,
-  error: null,
-  isLoading: false,
 };
 
 const userSlice = createSlice({

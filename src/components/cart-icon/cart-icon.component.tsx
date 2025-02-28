@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CartIconContainer, ItemCount, ShoppingIcon } from './cart-icon.styles';
-import { toggleCartHidden } from '../../store/cart/cart.action';
+import { toggleCartHidden } from '../../store/cart/cart.reducer';
 import { selectCartCount } from '../../store/cart/cart.selector';
 
 const CartIcon: FunctionComponent = () => {
