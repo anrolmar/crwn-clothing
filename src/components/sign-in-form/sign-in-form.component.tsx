@@ -1,11 +1,10 @@
 import { FirestoreError } from 'firebase/firestore';
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
 
+import { SignInButtonsContainer, SignInContainer, SignInTitle } from './sign-in-form.styles';
 import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../utils/firebase/auth-firebase.utils';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
-
-import './sign-in-form.styles.scss';
 
 const defaultFormFields = {
   email: '',
@@ -55,20 +54,20 @@ const SignInForm: FunctionComponent = () => {
   const handleSignInWithGoogle = async () => await signInWithGooglePopup();
 
   return (
-    <div className="sign-in-container">
-      <h2>I already have an account</h2>
+    <SignInContainer>
+      <SignInTitle>I already have an account</SignInTitle>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSignIn}>
         <FormInput label="Email" type="email" required onChange={handleChange} name="email" value={email} />
         <FormInput label="Password" type="password" required onChange={handleChange} name="password" value={password} />
-        <div className="buttons-container">
+        <SignInButtonsContainer>
           <Button type="submit">Sign In</Button>
           <Button type="button" buttonType="google-sign-in" onClick={handleSignInWithGoogle}>
             Sign In With Google
           </Button>
-        </div>
+        </SignInButtonsContainer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 
