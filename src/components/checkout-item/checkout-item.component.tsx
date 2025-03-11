@@ -12,6 +12,7 @@ import {
   Image,
 } from './checkout-item.styles';
 import { addItemToCart, clearItemFromCart, removeItemFromCart } from '../../store/cart/cart.action';
+import { setCartItems } from '../../store/cart/cart.reducer';
 import { selectCartItems } from '../../store/cart/cart.selector';
 import { CartItem } from '../../types';
 
@@ -29,11 +30,19 @@ const CheckoutItem: FunctionComponent<CheckoutItemProps> = ({ cartItem }) => {
   const handleAddProductToCart = () => {
     const product = cartItems.find((product) => product.id === cartItem.id);
     if (product) {
-      addItemToCart(cartItems, product);
+      const newCartItems = addItemToCart(cartItems, product);
+      dispatch(setCartItems(newCartItems));
     }
   };
-  const handleClearItemFromCart = () => dispatch(clearItemFromCart(cartItems, cartItem));
-  const handleRemoveItemFromCart = () => dispatch(removeItemFromCart(cartItems, cartItem));
+  const handleClearItemFromCart = () => {
+    const newCartItems = clearItemFromCart(cartItems, cartItem);
+    dispatch(setCartItems(newCartItems));
+  };
+
+  const handleRemoveItemFromCart = () => {
+    const newCartItems = removeItemFromCart(cartItems, cartItem);
+    dispatch(setCartItems(newCartItems));
+  };
 
   return (
     <CheckoutItemContainer>

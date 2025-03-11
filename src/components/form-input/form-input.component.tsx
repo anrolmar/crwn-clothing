@@ -7,9 +7,8 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FormInput: FunctionComponent<FormInputProps> = ({ label, ...inputOptions }) => {
-  const hasValue: boolean = Boolean(
-    inputOptions.value && typeof inputOptions.value === 'string' && inputOptions.value.length,
-  );
+  const hasValue =
+    inputOptions.value && typeof inputOptions.value === 'string' ? (inputOptions.value.length > 0).toString() : 'false';
 
   return (
     <Group>

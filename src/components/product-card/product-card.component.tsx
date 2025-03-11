@@ -10,6 +10,7 @@ import {
   ProductCardPrice,
 } from './product-card.styles';
 import { addItemToCart } from '../../store/cart/cart.action';
+import { setCartItems } from '../../store/cart/cart.reducer';
 import { selectCartItems } from '../../store/cart/cart.selector';
 import { Product } from '../../types';
 
@@ -24,7 +25,8 @@ const ProductCard: FunctionComponent<ProductCardProps> = ({ product }) => {
   const cartItems = useSelector(selectCartItems);
 
   const handleAddProductToCart = () => {
-    dispatch(addItemToCart(cartItems, product));
+    const newCartItems = addItemToCart(cartItems, product);
+    dispatch(setCartItems(newCartItems));
   };
 
   return (

@@ -1,9 +1,11 @@
 import { FirestoreError } from 'firebase/firestore';
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { SignUpContainer, SignUpTitle } from './sign-up-form.styles';
-import { signUpStart } from '../../store/user/user.action';
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+} from '../../utils/firebase/auth-firebase.utils';
 import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
@@ -15,8 +17,6 @@ const defaultFormFields = {
 };
 
 const SignUpForm: FunctionComponent = () => {
-  const dispatch = useDispatch();
-
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
@@ -32,7 +32,7 @@ const SignUpForm: FunctionComponent = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -41,7 +41,10 @@ const SignUpForm: FunctionComponent = () => {
     }
 
     try {
-      dispatch(signUpStart(email, password, displayName));
+      const authUser = await createAuthUserWithEmailAndPassword(email, password);
+      if (authUser) {
+        await createUserDocumentFromAuth(authUser.user, { displayName });
+      }
       resetFormFields();
     } catch (error) {
       if ((error as FirestoreError).code === 'already-exists') {

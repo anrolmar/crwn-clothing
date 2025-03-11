@@ -1,27 +1,28 @@
-import { UnknownAction } from 'redux';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { setCartItems, toggleCartHidden } from './cart.action';
 import { CartState } from './cart.types';
+import { CartItem } from '../../types';
 
 const INITIAL_STATE: CartState = {
   isCartOpen: false,
   cartItems: [],
 };
 
-export const cartReducer = (state = INITIAL_STATE, action: UnknownAction): CartState => {
-  if (setCartItems.match(action)) {
-    return {
-      ...state,
-      cartItems: action.payload,
-    };
-  }
+export const cartSlice = createSlice({
+  name: 'cart',
+  initialState: INITIAL_STATE,
+  reducers: {
+    setCartItems: (state, action: PayloadAction<CartItem[]>) => {
+      state.cartItems = action.payload;
+    },
 
-  if (toggleCartHidden.match(action)) {
-    return {
-      ...state,
-      isCartOpen: !state.isCartOpen,
-    };
-  }
+    toggleCartHidden: (state) => {
+      state.isCartOpen = !state.isCartOpen;
+    },
+  },
+});
 
-  return state;
-};
+// Action creators are generated for each case reducer function
+export const { setCartItems, toggleCartHidden } = cartSlice.actions;
+
+export const cartReducer = cartSlice.reducer;

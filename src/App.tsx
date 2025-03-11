@@ -7,13 +7,22 @@ import CheckoutPage from './routes/checkout/checkout.component';
 import HomePage from './routes/home/home.component';
 import NavBar from './routes/nav-bar/nav-bar.component';
 import ShopPage from './routes/shop/shop.component';
-import { checkUserSession } from './store/user/user.action';
+import { setCurrentUser } from './store/user/user.reducer';
+import { createUserDocumentFromAuth, onAuthStateChangedListener } from './utils/firebase/auth-firebase.utils';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkUserSession());
+    const unsubscribe = onAuthStateChangedListener((user) => {
+      if (user) {
+        void createUserDocumentFromAuth(user);
+      }
+
+      dispatch(setCurrentUser(user));
+    });
+
+    return unsubscribe;
   }, [dispatch]);
 
   return (

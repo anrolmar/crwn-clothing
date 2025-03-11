@@ -1,34 +1,23 @@
-import { UnknownAction } from 'redux';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchCategoriesFailed, fetchCategoriesStart, fetchCategoriesSuccess } from './category.action';
 import { CategoriesState } from './category.types';
+import { Category } from '../../types';
 
 const INITIAL_STATE: CategoriesState = {
   categories: [],
-  isLoading: false,
-  error: null,
 };
 
-export const categoriesReducer = (state = INITIAL_STATE, action: UnknownAction): CategoriesState => {
-  if (fetchCategoriesStart.match(action)) {
-    return { ...state, isLoading: true };
-  }
+const categoriesSlice = createSlice({
+  name: 'categories',
+  initialState: INITIAL_STATE,
+  reducers: {
+    setCategories: (state, action: PayloadAction<Category[]>) => {
+      state.categories = action.payload;
+    },
+  },
+});
 
-  if (fetchCategoriesSuccess.match(action)) {
-    return {
-      ...state,
-      categories: action.payload,
-      isLoading: false,
-    };
-  }
+// Action creators are generated for each case reducer function
+export const { setCategories } = categoriesSlice.actions;
 
-  if (fetchCategoriesFailed.match(action)) {
-    return {
-      ...state,
-      isLoading: false,
-      error: action.payload,
-    };
-  }
-
-  return state;
-};
+export const categoriesReducer = categoriesSlice.reducer;
